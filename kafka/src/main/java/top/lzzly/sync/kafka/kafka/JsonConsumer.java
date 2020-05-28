@@ -45,6 +45,7 @@ public class JsonConsumer {
         List<String> messages = new ArrayList<>();
         for (ConsumerRecord<?, ?> record : list) {
             Optional<?> kafkaMessage = Optional.ofNullable(record.value());
+            logger.warn("###消费者监听数据:"+kafkaMessage);
             // 获取消息
             kafkaMessage.ifPresent(o -> messages.add(o.toString()));
         }
@@ -165,15 +166,18 @@ public class JsonConsumer {
             String esType = getESType(tableName);
             switch (eventType) {
                 case "insert": {
+                    logger.warn("###消费者监听数据:insert");
                     appendUpdateList(updateUserList, updateRoleList, object, esType);
                     break;
                 }
                 case "update": {
+                    logger.warn("###消费者监听数据:update");
                     // 更新videos
                     appendUpdateList(updateUserList, updateRoleList, object, esType);
                     break;
                 }
                 case "delete": {
+                    logger.warn("###消费者监听数据:delete");
                     // 删除videos
                     appendDeleteList(deleteUserList, deleteRoleList, object, esType);
                     break;
