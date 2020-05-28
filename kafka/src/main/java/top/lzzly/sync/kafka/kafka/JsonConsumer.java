@@ -7,6 +7,8 @@ import io.searchbox.client.JestClient;
 import io.searchbox.core.Delete;
 import io.searchbox.core.Index;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -19,13 +21,15 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @Author : Liuzz
+ * @Author : yangwc
  * @Description: 消费者
  * @Date : 2018/9/19  09:48
  * @Modified By :
  */
 @Component
 public class JsonConsumer {
+
+    private Logger logger= LoggerFactory.getLogger(this.getClass());
 
     @Value("${es.data.format.user}")
     String userFormat;
@@ -37,6 +41,7 @@ public class JsonConsumer {
 
     @KafkaListener(topics = Config.KAFKA_JSON_TOPICS, id = Config.KAFKA_JSON_ID, containerFactory = "batchFactory")
     public void listen(List<ConsumerRecord<?, ?>> list) {
+        logger.warn("消费者监听中。。。");
         List<String> messages = new ArrayList<>();
         for (ConsumerRecord<?, ?> record : list) {
             Optional<?> kafkaMessage = Optional.ofNullable(record.value());

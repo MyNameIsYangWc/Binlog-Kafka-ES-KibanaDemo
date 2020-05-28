@@ -5,7 +5,7 @@ import io.searchbox.annotations.JestId;
 import java.io.Serializable;
 
 /**
- * @Author : Liuzz
+ * @Author : yangwc
  * @Description: Role实体类
  * @Date : 2019/3/20  11:56
  * @Modified By :

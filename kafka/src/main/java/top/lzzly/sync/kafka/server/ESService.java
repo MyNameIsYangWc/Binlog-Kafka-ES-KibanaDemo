@@ -12,7 +12,7 @@ import top.lzzly.sync.kafka.config.Config;
 import java.util.List;
 
 /**
- * @Author : Liuzz
+ * @Author : yangwc
  * @Description: ES 通用业务逻辑层
  * @Date : 2018/9/14  09:24
  * @Modified By :

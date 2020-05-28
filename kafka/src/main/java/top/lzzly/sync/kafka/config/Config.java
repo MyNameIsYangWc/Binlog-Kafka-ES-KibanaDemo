@@ -1,7 +1,7 @@
 package top.lzzly.sync.kafka.config;
 
 /**
- * @Author : Liuzz
+ * @Author : yangwc
  * @Description: config 配置文件
  * @Date : 2019/3/20  12:04
  * @Modified By :

@@ -12,3 +12,6 @@ bin\windows\kafka-topics.bat --list --zookeeper localhost:2181
 bin\windows\kafka-topics.bat --delete --zookeeper localhost:2181 --topic test
 这个命令只是将Topic标记为删除，如果想真正删除，需要修改config/server.properties文件，加入下面配置
 delete.topic.enable=true
+
+es启动
+E:\elasticsearch-7.6.1\bin\elasticsearch.bat

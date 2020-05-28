@@ -8,7 +8,7 @@ import io.searchbox.client.config.HttpClientConfig;
 import java.util.Objects;
 
 /**
- * @Author : Liuzz
+ * @Author : yangwc
  * @Description: Jest客户端
  * @Date : 2018/9/14  10:43
  * @Modified By :
@@ -19,7 +19,6 @@ public class EsJestClient {
 
     /**
      * 获取客户端
-     *
      * @return jestclient
      */
     public static synchronized JestClient getClient() {

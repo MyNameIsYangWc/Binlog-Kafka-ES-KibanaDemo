@@ -15,7 +15,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author : Liuzz
+ * @Author : yangwc
  * @Description: kafka生产者
  * @Date : 2019/3/20  10:27
  * @Modified By :

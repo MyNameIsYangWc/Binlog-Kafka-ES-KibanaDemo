@@ -13,3 +13,4 @@ show variables like 'binlog_format'; 查看Binary Log记录方式
 Kafka配置：
 1.启动Zookeeper服务
 2.启动Kafka服务
+3.消费者连接超时:注意修改server.properties文件: listeners=PLAINTEXT://:9092
