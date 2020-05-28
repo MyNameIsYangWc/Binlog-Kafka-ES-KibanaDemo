@@ -1,0 +1,15 @@
+Mysql配置：
+1.开启mysql的binlog日志
+修改my.cnf或my.ini
+在[mysqld]下添加
+log-bin=mysql-bin  # 开启binlog
+binlog-format=ROW  # 设置Binary Log记录方式为Row
+server_id=1 #  ***在yml文件中也需要配置
+2.重启mysql
+3.查看binlog状态
+show variables like 'log_bin'; 查看binlog开启状态
+show variables like 'binlog_format'; 查看Binary Log记录方式
+##################################################################
+Kafka配置：
+1.启动Zookeeper服务
+2.启动Kafka服务
