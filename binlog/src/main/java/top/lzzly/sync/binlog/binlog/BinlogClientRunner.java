@@ -3,6 +3,8 @@ package top.lzzly.sync.binlog.binlog;
 import com.alibaba.fastjson.JSON;
 import com.github.shyiko.mysql.binlog.BinaryLogClient;
 import com.github.shyiko.mysql.binlog.event.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +27,8 @@ import java.util.Map;
  */
 @Component
 public class BinlogClientRunner implements CommandLineRunner {
+
+    private Logger logger= LoggerFactory.getLogger(this.getClass());
 
     @Value("${binlog.host}")
     private String host;
@@ -77,16 +81,20 @@ public class BinlogClientRunner implements CommandLineRunner {
         // 创建binlog监听客户端
         BinaryLogClient client = new BinaryLogClient(host, port, user, password);
         client.setServerId(serverId);
+        logger.warn("监听中。。。");
         client.registerEventListener((event -> {
             // binlog事件
             EventData data = event.getData();
             if (data != null) {
+                logger.info("data###:"+data);
                 if (data instanceof TableMapEventData) {
                     TableMapEventData tableMapEventData = (TableMapEventData) data;
+                    logger.warn("###触发的表###"+tableMapEventData.getTable());
                     tableMap.put(tableMapEventData.getTableId(), tableMapEventData.getDatabase() + "." + tableMapEventData.getTable());
                 }
                 // update数据
                 if (data instanceof UpdateRowsEventData) {
+                    logger.warn("触发更新。。。");
                     UpdateRowsEventData updateRowsEventData = (UpdateRowsEventData) data;
                     String tableName = tableMap.get(updateRowsEventData.getTableId());
                     if (tableName != null && databaseList.contains(tableName)) {
@@ -99,6 +107,7 @@ public class BinlogClientRunner implements CommandLineRunner {
                 }
                 // insert数据
                 else if (data instanceof WriteRowsEventData) {
+                    logger.warn("触发新增。。。");
                     WriteRowsEventData writeRowsEventData = (WriteRowsEventData) data;
                     String tableName = tableMap.get(writeRowsEventData.getTableId());
                     if (tableName != null && databaseList.contains(tableName)) {
@@ -111,6 +120,7 @@ public class BinlogClientRunner implements CommandLineRunner {
                 }
                 // delete数据
                 else if (data instanceof DeleteRowsEventData) {
+                    logger.warn("触发删除。。。");
                     DeleteRowsEventData deleteRowsEventData = (DeleteRowsEventData) data;
                     String tableName = tableMap.get(deleteRowsEventData.getTableId());
                     if (tableName != null && databaseList.contains(tableName)) {
