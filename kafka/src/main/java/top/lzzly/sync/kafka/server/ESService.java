@@ -1,6 +1,5 @@
 package top.lzzly.sync.kafka.server;
 
-import com.alibaba.fastjson.JSONObject;
 import io.searchbox.core.Delete;
 import io.searchbox.core.Index;
 
