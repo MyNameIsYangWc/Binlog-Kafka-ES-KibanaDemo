@@ -17,6 +17,12 @@ public interface ESService{
 
     void delteIndex(String index);
 
+    void indicatesExists(String index);
+
+    void createDocument(String index,String type, Object object);
+
+    void readDocument(String search);
+
 
 
     boolean executeESClientRequest(List updateUserList, String esUserType);
@@ -26,5 +32,10 @@ public interface ESService{
     Index getUpdateIndex(String id, String esType, Object object);
 
 
+    void createIndexMapping(String index, String type, String mappingString);
 
+
+    void updateDocument(String index, String id, Object object);
+
+    void deleteDocument(String index, String id, Object object);
 }
