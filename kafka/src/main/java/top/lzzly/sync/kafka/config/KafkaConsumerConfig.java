@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * @Author : yangwc
  * @Description: kafka消费者配置
- * @Date : 2018/12/4  17:30
+ * @Date : 2020/5/30
  * @Modified By :
  */
 

@@ -9,6 +9,7 @@ import io.searchbox.core.Index;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -36,8 +37,8 @@ public class JsonConsumer {
     @Value("${es.data.format.role}")
     String roleFormat;
 
-    JestClient client = EsJestClient.getClient();
-    ESService documentDao = new ESService(client);
+    @Autowired
+    ESService documentDao;
 
     @KafkaListener(topics = Config.KAFKA_JSON_TOPICS, id = Config.KAFKA_JSON_ID, containerFactory = "batchFactory")
     public void listen(List<ConsumerRecord<?, ?>> list) {

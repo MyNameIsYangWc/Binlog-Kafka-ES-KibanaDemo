@@ -4,13 +4,14 @@ import com.google.gson.GsonBuilder;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.config.HttpClientConfig;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 /**
  * @Author : yangwc
  * @Description: Jest客户端
- * @Date : 2018/9/14  10:43
+ * @Date : 2020/5/30
  * @Modified By :
  */
 public class EsJestClient {
