@@ -1,10 +1,9 @@
 package top.lzzly.sync.binlog.dto;
 
 /**
- * @Author :
  * @Description: Binlog数据传输对象
- * @Date : 2019/3/18  11:01
- * @Modified By :
+ * @Date : 2020/3/30
+ * @Author :杨文超
  */
 public class BinlogDto {
     private String event;

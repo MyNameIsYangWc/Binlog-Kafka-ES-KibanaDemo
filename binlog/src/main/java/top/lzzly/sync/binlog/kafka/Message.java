@@ -3,10 +3,9 @@ package top.lzzly.sync.binlog.kafka;
 import java.util.Date;
 
 /**
- * @Author :
  * @Description: Kafka数据传输对象
- * @Date : 2019/3/18  11:01
- * @Modified By :
+ * @Date : 2020/3/30
+ * @Author : 杨文超
  */
 public class Message {
     private Long id;

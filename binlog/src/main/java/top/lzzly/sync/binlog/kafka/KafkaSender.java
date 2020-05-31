@@ -15,10 +15,9 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author : yangwc
  * @Description: kafka生产者
- * @Date : 2019/3/20  10:27
- * @Modified By :
+ * @Date : 2020/3/30
+ * @Author :杨文超
  */
 @Component
 public class KafkaSender {

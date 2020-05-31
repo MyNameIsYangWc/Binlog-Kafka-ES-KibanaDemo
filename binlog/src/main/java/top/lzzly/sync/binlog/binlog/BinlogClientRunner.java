@@ -20,10 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author :
  * @Description: binlog监听
- * @Date : 2019/3/20  10:37
- * @Modified By :
+ * @Date : 2020/3/30
+ * @Author :杨文超
  */
 @Component
 public class BinlogClientRunner implements CommandLineRunner {
