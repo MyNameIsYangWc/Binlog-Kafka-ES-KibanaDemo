@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description: 表数据映射到es
@@ -68,18 +67,15 @@ public class CommonService {
     /**
      * 执行es客户端请求
      * @param tableList 每个表对应的list
-     *  TODO 增加实体类,此处需增加对应的逻辑
      * @Date : 2020/05/31
      * @Author : 杨文超
      */
-    public void executeESClientRequest(Map<String,List> tableList){
-        if(tableList!=null){
-            if (tableList.get("user") != null && tableList.get("user").size()>0) {
-                documentDao.executeESClientRequest(tableList.get("user"));
-            }
-            if (tableList.get("role") != null && tableList.get("user").size()>0) {
-                documentDao.executeESClientRequest(tableList.get("role"));
-            }
-        }
+    public void executeESClientRequest(List<List> tableList){
+       if(tableList != null && tableList.size()>0){
+           for (int i = 0; i < tableList.size(); i++) {
+               //每次请求的客户端必须发送的estype类型一致
+               documentDao.executeESClientRequest(tableList.get(i));
+           }
+       }
     }
 }

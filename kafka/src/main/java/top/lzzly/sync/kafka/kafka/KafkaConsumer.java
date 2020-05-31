@@ -13,7 +13,9 @@ import top.lzzly.sync.kafka.common.util.OrmEntityUtil;
 import top.lzzly.sync.kafka.config.Config;
 import top.lzzly.sync.kafka.server.CommonService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @Description: kafka消费者
@@ -88,9 +90,9 @@ public class KafkaConsumer {
         }
 
         //执行es客户端请求 TODO 增加实体类此处需增加对应的list到tableList中
-        HashMap<String,List> tableList = new HashMap<>();
-        tableList.put("user",userList);
-        tableList.put("role",roleList);
+        List<List> tableList = new ArrayList<>();
+        tableList.add(userList);
+        tableList.add(roleList);
         commonService.executeESClientRequest(tableList);
     }
 }
