@@ -1,18 +1,14 @@
 package top.lzzly.sync.kafka.server.impl;
 
-import com.alibaba.fastjson.JSON;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.*;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.DeleteIndex;
 import io.searchbox.indices.IndicesExists;
-import io.searchbox.indices.mapping.PutMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.lzzly.sync.kafka.config.Config;
 import top.lzzly.sync.kafka.config.EsJestClient;
 import top.lzzly.sync.kafka.entity.User;
 import top.lzzly.sync.kafka.server.ESService;
@@ -20,6 +16,7 @@ import top.lzzly.sync.kafka.server.ESService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Author : yangwc
@@ -33,7 +30,6 @@ public class ESServiceImpl implements ESService {
     private Logger logger= LoggerFactory.getLogger(ESServiceImpl.class);
 
     JestClient client = EsJestClient.getClient();
-
 
     /**
      * 创建索引
@@ -88,22 +84,28 @@ public class ESServiceImpl implements ESService {
     }
 
     /**
-     * 创建文档
+     * 创建文档/更新文档
      * @param index 索引 (库名)
      * @param type (表名)
-     * @param object 文档(数据)
+     * @param entity 文档(数据)
      */
     @Override
-    public void createDocument(String index,String type, Object object) {
+    public void operationDocument(String index,String type, List entity) {
 
-        DocumentResult execute=null;
-        try {
-            execute = client.execute(new Index.Builder(object).index(index).type(type).build());
-        } catch (IOException e) {
-            logger.error("创建文档异常:"+e);
-            e.printStackTrace();
+        //Index集合
+        List<Index> indices = new ArrayList<>();
+        for (int i = 0; i < entity.size(); i++) {
+            indices.add(getUpdateIndex(
+                    index,
+                    UUID.randomUUID().toString().replaceAll("-",""),//文档id
+                    type,//文档类型
+                    entity.get(i)));//文档数据
         }
-        logger.warn("创建文档:"+execute.isSucceeded()+",信息:"+execute.getJsonString());
+
+        //批量更新文档
+        boolean flag = executeESClientRequest(indices);
+
+        System.out.println(flag);
     }
 
     /**
@@ -124,55 +126,27 @@ public class ESServiceImpl implements ESService {
     }
 
     /**
-     * 更新文档
-     * @param index 索引 (库名)
-     * @param id 文档id
-     * @param object 文档(数据)
-     *               todo 异常
-     */
-    @Override
-    public void updateDocument(String index, String id, Object object) {
-
-        try {
-            DocumentResult execute = client.execute(new Update.Builder(object).index(index).type("user").id(id).build());
-            System.out.println(execute);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void deleteDocument(String index, String id, Object object) {
-
-        try {
-            DocumentResult employees = client.execute(new Delete.Builder("32").index("temmoliu").build());
-            System.out.println(employees);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * 设置数据类型和分词方式
+     * 删除文档
      * @param index
+     * @param type
+     * @param id
      */
     @Override
-    public void createIndexMapping(String index, String type, String mappingString) {
+    public void deleteDocument(String index,String type,List<String> id) {
 
-        JestResult execute=null;
-        try {
-            execute = client.execute(new PutMapping.Builder(index, type, mappingString).build());
-        } catch (IOException e) {
-            logger.error("设置数据类型和分词方式ERROR:"+e);
-            e.printStackTrace();
+        //Delete集合
+        List<Delete> deleteIndex = new ArrayList<>();
+        for (int i = 0; i < id.size(); i++) {
+            deleteIndex.add(getDeleteIndex(
+                    index,
+                    id.get(i),//文档id
+                    type));//文档类型
         }
-        logger.warn("设置数据类型和分词方式:"+execute.isSucceeded()+",信息:"+execute.getJsonString());
+
+        //批量更新文档
+        boolean flag = executeESClientRequest(deleteIndex);
+
     }
-
-
-
 
     public static void main(String[] args) {
 //        String search = "{" +
@@ -185,58 +159,67 @@ public class ESServiceImpl implements ESService {
 //                "  }" +
 //                "}";
 //        new ESServiceImpl().readDocument(search);
+        ArrayList<Object> objects1 = new ArrayList<>();
+        //Delete集合
+        ESServiceImpl esService = new ESServiceImpl();
+        Delete deleteIndex = esService.getDeleteIndex(
+                "temmoliu",
+                "5424",//文档id
+                "user");//文档类型
+
+        objects1.add(deleteIndex);
 
         User user = new User();
-        user.setId("65");
-        user.setName("杨文超");
-        new ESServiceImpl().deleteDocument("temmoliu","32",user);
+        user.setId("66");
+//        user.setName("杨文超");
+        Index updateIndex = esService.getUpdateIndex("temmoliu", "5424", "role", user);
+        objects1.add(updateIndex);
+
+        esService.executeESClientRequest(objects1);
     }
 
-    public boolean update(String id, String esType, Object object) {
-        Index index = new Index.Builder(object).index(Config.ES_INDICES).type(esType).id(id).refresh(true).build();
-        try {
-            JestResult result = client.execute(index);
-            return result != null && result.isSucceeded();
-        } catch (Exception ignore) {
-        }
-        return false;
-    }
-
+    /**
+     * 更新/创建 index
+     * @param id
+     * @param esType
+     * @param object
+     * @return
+     */
     @Override
-    public Index getUpdateIndex(String id, String esType, Object object) {
-        return new Index.Builder(object).index(Config.ES_INDICES).type(esType).id(id).refresh(true).build();
+    public Index getUpdateIndex(String index,String id, String esType, Object object) {
+        return new Index.Builder(object).index(index).type(esType).id(id).refresh(true).build();
     }
 
+    /**
+     * 删除Index
+     * @param index
+     * @param id
+     * @param esType
+     * @return
+     */
     @Override
-    public Delete getDeleteIndex(String id, String esType) {
-        return new Delete.Builder(id).index(Config.ES_INDICES).type(esType).build();
+    public Delete getDeleteIndex(String index,String id, String esType) {
+        return new Delete.Builder(id).index(index).type(esType).build();
     }
 
+    /**
+     * 数据同步ES
+     * @param list
+     * @return
+     */
     @Override
-    public boolean executeESClientRequest(List indexList, String esType) {
+    public boolean executeESClientRequest(List list) {
         Bulk bulk = new Bulk.Builder()
-                .defaultIndex(Config.ES_INDICES)
-                .defaultType(esType)
-                .addAction(indexList)
+                .addAction(list)
                 .build();
-        indexList.clear();
+        list.clear();
         try {
             JestResult result = client.execute(bulk);
+            logger.warn("数据同步ES:"+result.isSucceeded()+",信息:"+result.getJsonString());
             return result != null && result.isSucceeded();
         } catch (Exception ignore) {
+            logger.error("数据同步ES异常:"+ignore);
         }
         return false;
-    }
-
-    public boolean delete(String id, String esType) {
-        try {
-            DocumentResult result = client.execute(new Delete.Builder(id)
-                    .index(Config.ES_INDICES)
-                    .type(esType)
-                    .build());
-            return result.isSucceeded();
-        } catch (Exception e) {
-            throw new RuntimeException("delete exception", e);
-        }
     }
 }

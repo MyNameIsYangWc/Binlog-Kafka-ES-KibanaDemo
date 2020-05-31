@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import top.lzzly.sync.kafka.server.ESService;
 
+import java.util.List;
+
 @Controller
 public class ESController {
 
@@ -35,13 +37,13 @@ public class ESController {
     }
 
     /**
-     * 创建文档
+     * 创建文档/更新文档
      * @param index 索引 (库名)
      * @param type (表名)
-     * @param object 文档(数据)
+     * @param entity 文档(数据)
      */
-    public void createDocument(String index,String type,Object object) {
-        esService.createDocument(index,type,object);
+    public void operationDocument(String index,String type, List entity) {
+        esService.operationDocument(index,type,entity);
     }
 
     /**
@@ -53,30 +55,13 @@ public class ESController {
     }
 
     /**
-     * 更新文档
-     * @param index 索引 (库名)
-     * @param id 文档id
-     * @param object 文档(数据)
-     */
-    public void updateDocument(String index,String id,Object object) {
-        esService.updateDocument(index,id,object);
-    }
-
-    /**
      * 删除文档
      * @param index 索引 (库名)
-     * @param id 文档id
-     * @param object 文档(数据)
+     * @param type
+     * @param id  文档id
      */
-    public void deleteDocument(String index,String id,Object object) {
-        esService.deleteDocument(index,id,object);
+    public void deleteDocument(String index,String type,List<String> id) {
+        esService.deleteDocument(index,type,id);
     }
 
-    /**
-     * 设置索引的mapping（设置数据类型和分词方式）
-     * @param index
-     */
-    public void createIndexMapping(String index, String type, String mappingString) {
-        esService.createIndexMapping(index,type,mappingString);
-    }
 }

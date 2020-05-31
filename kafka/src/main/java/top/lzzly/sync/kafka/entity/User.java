@@ -1,7 +1,5 @@
 package top.lzzly.sync.kafka.entity;
 
-import io.searchbox.annotations.JestId;
-
 import java.io.Serializable;
 
 /**

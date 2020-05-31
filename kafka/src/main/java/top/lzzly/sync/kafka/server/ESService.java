@@ -19,23 +19,17 @@ public interface ESService{
 
     void indicatesExists(String index);
 
-    void createDocument(String index,String type, Object object);
+    public void operationDocument(String index,String type, List entity);
 
     void readDocument(String search);
 
 
 
-    boolean executeESClientRequest(List updateUserList, String esUserType);
+    boolean executeESClientRequest(List updateUserList);
 
-    Delete getDeleteIndex(String id, String esType);
+    Delete getDeleteIndex(String index,String id, String esType);
 
-    Index getUpdateIndex(String id, String esType, Object object);
+    Index getUpdateIndex(String index,String id, String esType, Object object);
 
-
-    void createIndexMapping(String index, String type, String mappingString);
-
-
-    void updateDocument(String index, String id, Object object);
-
-    void deleteDocument(String index, String id, Object object);
+    void deleteDocument(String index,String type,List<String> id);
 }
