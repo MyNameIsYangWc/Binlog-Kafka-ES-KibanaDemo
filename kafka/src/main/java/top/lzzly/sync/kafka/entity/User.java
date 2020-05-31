@@ -3,10 +3,10 @@ package top.lzzly.sync.kafka.entity;
 import java.io.Serializable;
 
 /**
- * @Author : yangwc
  * @Description: User实体类
- * @Date : 2019/3/20  11:56
- * @Modified By :
+ * @Date : 2020/05/30
+ * @Date : 2020/5/30
+ * @Author : 杨文超
  */
 public class User implements Serializable {
 

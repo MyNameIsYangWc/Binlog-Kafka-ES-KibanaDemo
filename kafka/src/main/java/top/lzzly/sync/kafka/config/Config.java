@@ -1,10 +1,9 @@
 package top.lzzly.sync.kafka.config;
 
 /**
- * @Author : yangwc
  * @Description: config 配置文件
  * @Date : 2020/5/30
- * @Modified By :
+ * @Author : 杨文超
  */
 public interface Config {
 

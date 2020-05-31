@@ -4,15 +4,13 @@ import com.google.gson.GsonBuilder;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.config.HttpClientConfig;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 /**
- * @Author : yangwc
  * @Description: Jest客户端
  * @Date : 2020/5/30
- * @Modified By :
+ * @Author : 杨文超
  */
 public class EsJestClient {
 
@@ -21,6 +19,8 @@ public class EsJestClient {
     /**
      * 获取客户端
      * @return jestclient
+     * @Date : 2020/5/30
+     * @Author : 杨文超
      */
     public static synchronized JestClient getClient() {
         if (client == null) {
@@ -31,6 +31,8 @@ public class EsJestClient {
 
     /**
      * 关闭客户端
+     * @Date : 2020/5/30
+     * @Author : 杨文超
      */
     public static void close(JestClient client) {
         if (!Objects.isNull(client)) {
@@ -44,6 +46,8 @@ public class EsJestClient {
 
     /**
      * 建立连接
+     * @Date : 2020/5/30
+     * @Author : 杨文超
      */
     private static void build() {
         JestClientFactory factory = new JestClientFactory();

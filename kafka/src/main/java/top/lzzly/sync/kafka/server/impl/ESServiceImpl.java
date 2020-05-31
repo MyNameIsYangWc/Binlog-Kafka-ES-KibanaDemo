@@ -19,10 +19,9 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * @Author : yangwc
  * @Description: ES 通用逻辑
- * @Date : 2018/9/14  09:24
- * @Modified By :
+ * @Date : 2020/05/30
+ * @Author : 杨文超
  */
 @Service
 public class ESServiceImpl implements ESService {
@@ -34,7 +33,8 @@ public class ESServiceImpl implements ESService {
     /**
      * 创建索引
      * @param index
-     * @Author yangwc
+     * @Date : 2020/05/30
+     * @Author : 杨文超
      */
     @Override
     public void createIndex(String index){
@@ -52,6 +52,8 @@ public class ESServiceImpl implements ESService {
     /**
      * 删除索引
      * @param index
+     * @Date : 2020/05/30
+     * @Author : 杨文超
      */
     @Override
     public void delteIndex(String index) {
@@ -69,6 +71,8 @@ public class ESServiceImpl implements ESService {
     /**
      * 检查索引是否存在
      * @param index
+     * @Date : 2020/05/30
+     * @Author : 杨文超
      */
     @Override
     public void indicatesExists(String index) {
@@ -88,6 +92,8 @@ public class ESServiceImpl implements ESService {
      * @param index 索引 (库名)
      * @param type (表名)
      * @param entity 文档(数据)
+     * @Date : 2020/05/30
+     * @Author : 杨文超
      */
     @Override
     public void operationDocument(String index,String type, List entity) {
@@ -111,6 +117,8 @@ public class ESServiceImpl implements ESService {
     /**
      * 读取文档
      * @param search 条件
+     * @Date : 2020/05/30
+     * @Author : 杨文超
      */
     @Override
     public void readDocument(String search) {
@@ -130,6 +138,8 @@ public class ESServiceImpl implements ESService {
      * @param index
      * @param type
      * @param id
+     * @Date : 2020/05/30
+     * @Author : 杨文超
      */
     @Override
     public void deleteDocument(String index,String type,List<String> id) {
@@ -183,7 +193,8 @@ public class ESServiceImpl implements ESService {
      * @param id
      * @param esType
      * @param object
-     * @return
+     * @Date : 2020/05/30
+     * @Author : 杨文超
      */
     @Override
     public Index getUpdateIndex(String index,String id, String esType, Object object) {
@@ -195,7 +206,8 @@ public class ESServiceImpl implements ESService {
      * @param index
      * @param id
      * @param esType
-     * @return
+     * @Date : 2020/05/30
+     * @Author : 杨文超
      */
     @Override
     public Delete getDeleteIndex(String index,String id, String esType) {
@@ -205,7 +217,8 @@ public class ESServiceImpl implements ESService {
     /**
      * 数据同步ES
      * @param list
-     * @return
+     * @Date : 2020/05/30
+     * @Author : 杨文超
      */
     @Override
     public boolean executeESClientRequest(List list) {

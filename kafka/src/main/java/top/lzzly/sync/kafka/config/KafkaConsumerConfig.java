@@ -14,10 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author : yangwc
  * @Description: kafka消费者配置
  * @Date : 2020/5/30
- * @Modified By :
+ * @Author : 杨文超
  */
 
 

@@ -6,10 +6,9 @@ import io.searchbox.core.Index;
 import java.util.List;
 
 /**
- * @Author : yangwc
  * @Description: ES 接口
- * @Date : 2018/9/14  09:24
- * @Modified By :
+ * @Date : 2020/05/30
+ * @Author : 杨文超
  */
 public interface ESService{
 
@@ -22,8 +21,6 @@ public interface ESService{
     public void operationDocument(String index,String type, List entity);
 
     void readDocument(String search);
-
-
 
     boolean executeESClientRequest(List updateUserList);
 
