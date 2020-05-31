@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import top.lzzly.sync.kafka.server.ESService;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ESController {
@@ -42,8 +43,8 @@ public class ESController {
      * @param type (表名)
      * @param entity 文档(数据)
      */
-    public void operationDocument(String index,String type, List entity) {
-        esService.operationDocument(index,type,entity);
+    public void operationDocument(String index,String type, List<Map> entity) {
+//        esService.operationDocument(index,type,entity);
     }
 
     /**
@@ -57,11 +58,10 @@ public class ESController {
     /**
      * 删除文档
      * @param index 索引 (库名)
-     * @param type
      * @param id  文档id
      */
-    public void deleteDocument(String index,String type,List<String> id) {
-        esService.deleteDocument(index,type,id);
+    public void deleteDocument(String index,List<String> id) {
+        esService.deleteDocument(index,id);
     }
 
 }

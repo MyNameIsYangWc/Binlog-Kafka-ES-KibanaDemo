@@ -62,9 +62,7 @@ public class KafkaConsumer {
      */
     private void updateES(List<String> messages) {
 
-        //每个表对应一个list TODO 增加实体类此处需增加对应的list
-        List userList = new ArrayList<>();//user
-        List roleList = new ArrayList<>();//role
+        List list = new ArrayList<>();
 
         for (String message : messages) {
             JSONObject result = null;
@@ -86,13 +84,9 @@ public class KafkaConsumer {
             // 转化为对应格式的json字符串
             JSONObject entity = OrmEntityUtil.ormEntity(tableName,valueStr);
             //生成index/Delete 对象存入list
-            commonService.ObjectSaveList(index,esType,entity,eventType,userList,roleList);
+            commonService.ObjectSaveList(index,esType,entity,eventType,list);
         }
-
-        //执行es客户端请求 TODO 增加实体类此处需增加对应的list到tableList中
-        List<List> tableList = new ArrayList<>();
-        tableList.add(userList);
-        tableList.add(roleList);
-        commonService.executeESClientRequest(tableList);
+        //执行es客户端请求
+        commonService.executeESClientRequest(list);
     }
 }

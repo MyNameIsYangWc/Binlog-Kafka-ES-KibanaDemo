@@ -4,6 +4,7 @@ import io.searchbox.core.Delete;
 import io.searchbox.core.Index;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: ES 接口
@@ -18,15 +19,15 @@ public interface ESService{
 
     void indicatesExists(String index);
 
-    public void operationDocument(String index,String type, List entity);
+    public void operationDocument(String index,List<Map> entity);
 
     void readDocument(String search);
 
     boolean executeESClientRequest(List updateUserList);
 
-    Delete getDeleteIndex(String index,String id, String esType);
+    Delete getDeleteIndex(String index,String id);
 
-    Index getUpdateIndex(String index,String id, String esType, Object object);
+    Index getUpdateIndex(String index,String id,Object object);
 
-    void deleteDocument(String index,String type,List<String> id);
+    void deleteDocument(String index,List<String> id);
 }
