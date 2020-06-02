@@ -24,3 +24,4 @@ nohup bin/zookeeper-server-start.sh config/zookeeper.properties &    ## zookeepe
 nohup bin/kafka-server-start.sh config/server.properties &   ##kafka
 systemctl start mysqld ##mysql启动
 systemctl restart mysqld ## 重启mysql
+./bin/elasticsearch -d ## es 启动 es用户下
