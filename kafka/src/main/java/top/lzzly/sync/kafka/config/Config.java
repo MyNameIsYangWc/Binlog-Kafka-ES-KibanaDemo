@@ -7,8 +7,7 @@ package top.lzzly.sync.kafka.config;
  */
 public interface Config {
 
-    String ES_HOST = "http://localhost:9200";
-
+    String ES_HOST = "http://129.211.113.218:9200";
     String KAFKA_JSON_TOPICS = "binlog";
     String KAFKA_JSON_ID = "consumer2";
 
