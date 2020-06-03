@@ -1,6 +1,6 @@
-linux版本
-防火墙命令：
-1、开启防火墙
+																linux版本
+																防火墙命令：
+1、开启防火墙	
     systemctl start firewalld
 2、开放指定端口
       firewall-cmd --zone=public --add-port=1935/tcp --permanent
@@ -20,30 +20,56 @@ netstat -ntulp |grep 1935   //查看所有1935端口使用情况·
 5.查找文件夹
 find / -name 文件名
 ------------------------------------------------------------------------------------------------------------
-mysql命令
+																mysql命令
 systemctl start mysqld ##mysql启动
 systemctl restart mysqld ## 重启mysql
 ------------------------------------------------------------------------------------------------------------
-开启MySQL binlog日志
+															开启MySQL binlog日志
 1.show variables like '%log_bin%'；查看到binlog日志状态;
 2.退出MySQL，使用vi编辑器修改MySQL的my.cnf配置文件
 添加：
 server-id=1
 log-bin=/data/mysql-bin
 binlog-format=ROW
+---------------------------------------------------------------------------------------------------------------
+															docker容器重置mysql密码
+docker exec -it mysql bash
+# 设置跳过权限表的加载 
+# 警告：这就意味着任何用户都能登录进来，并进行任何操作，相当不安全。
+echo "skip-grant-tables" >> /etc/mysql/conf.d/docker.cnf
+# 退出容器
+exit
+# 重启容器
+docker restart mysql
+# 再次进入容器
+docker exec -it mysql bash
+# 登录 mysql（无需密码）
+mysql -uroot 
+# 更新权限
+flush privileges;
+# 修改密码
+alter user 'root'@'localhost' identified by '123456';
+# 退出mysql
+exit
+# 替换掉刚才加的跳过权限表的加载参数
+sed -i "s/skip-grant-tables/ /" /etc/mysql/conf.d/docker.cnf
+# 退出容器
+exit
+# 重启容器
+docker restart mysql
 -------------------------------------------------------------------------------------------------------------
-zk && kafka启动命令
+																zk && kafka启动命令
 nohup bin/zookeeper-server-start.sh config/zookeeper.properties &    ## zookeeper
 nohup bin/kafka-server-start.sh config/server.properties &   ##kafka
 -------------------------------------------------------------------------------------------------------------
-ES启动
+																	ES启动
 创建es用户，在es下启动
 ./bin/elasticsearch -d ## es
 curl "http://localhost:9200" 查看es
 ===========================================================================================================
 ===========================================================================================================
 ===========================================================================================================
-docker命令
+																	docker命令
 1. docker search mysql   这条命令表示查询mysql的所有镜像信息
 2. docker pull mysql  表示从官方下载默认版本的mysql，latest
     docker pull mysql:5.7  表示下载mysql版本5.7的
@@ -56,7 +82,7 @@ docker命令
 9. docker stop  容器id   停止容器
 10. docker rm    容器id   删除容器
 
-安装mysql后处理登录不上
+																	安装mysql后处理登录不上
 进入mysql>命令行界面
 进行授权远程连接(注意mysql 8.0跟之前的授权方式不同)
 ? 1、mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'WITH GRANT OPTION;?
@@ -68,8 +94,8 @@ ALTER?USER?'root'@'%'?IDENTIFIED?WITH?mysql_native_password?BY?'password';?
 刷新权限
 flush privileges;
 (5)设置完成，再次使用 Navicat 连接数据库
-
-kafka配置
+-------------------------------------------------------------------------------------------------------------------
+																	kafka配置
  创建kafka：
  docker run  -d --name kafka -p 9092:9092 -e KAFKA_BROKER_ID=0 -e KAFKA_ZOOKEEPER_CONNECT=129.211.113.218:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://129.211.113.218:9092 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -t wurstmeister/kafka
 
