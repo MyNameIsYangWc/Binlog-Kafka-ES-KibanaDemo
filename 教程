@@ -69,6 +69,11 @@ ALTER?USER?'root'@'%'?IDENTIFIED?WITH?mysql_native_password?BY?'password';?
 flush privileges;
 (5)设置完成，再次使用 Navicat 连接数据库
 
+kafka配置
+ 创建kafka：
+ docker run  -d --name kafka -p 9092:9092 -e KAFKA_BROKER_ID=0 -e KAFKA_ZOOKEEPER_CONNECT=129.211.113.218:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://129.211.113.218:9092 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -t wurstmeister/kafka
+
+
 ===========================================================================================================
 ===========================================================================================================
 ===========================================================================================================
