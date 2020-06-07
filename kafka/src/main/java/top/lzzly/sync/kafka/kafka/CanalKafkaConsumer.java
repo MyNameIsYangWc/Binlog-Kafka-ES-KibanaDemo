@@ -10,20 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import top.lzzly.sync.kafka.common.util.OrmEntityUtil;
-import top.lzzly.sync.kafka.config.Config;
 import top.lzzly.sync.kafka.server.CommonService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
  * @Description: kafka消费者
- * @Date : 2020/05/30
+ * @Date : 2020/06/07
  * @Author : 杨文超
  */
 @Component
-public class KafkaConsumer {
+public class CanalKafkaConsumer {
 
     private Logger logger= LoggerFactory.getLogger(this.getClass());
 
@@ -32,18 +32,18 @@ public class KafkaConsumer {
 
     /**
      * @Description: kafka 监听器
-     * @Date : 2020/05/30
+     * @Date : 2020/06/07
      * @Author : 杨文超
      */
-    @KafkaListener(topics = Config.KAFKA_JSON_TOPICS, id = Config.KAFKA_JSON_ID, containerFactory = "batchFactory")
+    @KafkaListener(topics = "canal", id = "canalConsumer", containerFactory = "batchFactory")
     public void listen(List<ConsumerRecord<?, ?>> list) {
 
-        logger.warn("消费者监听中。。。");
+        logger.warn("canalConsumer消费者监听中。。。");
         List<String> messages = new ArrayList<>();
         for (ConsumerRecord<?, ?> record : list) {
 
             Optional<?> kafkaMessage = Optional.ofNullable(record.value());
-            logger.warn("###消费者监听数据:"+kafkaMessage);
+            logger.warn("###canalConsumer消费者监听数据:"+kafkaMessage);
             // 获取消息
             kafkaMessage.ifPresent(o -> messages.add(o.toString()));
         }
@@ -65,28 +65,15 @@ public class KafkaConsumer {
         List list = new ArrayList<>();
 
         for (String message : messages) {
-            JSONObject result = null;
-            try {
-                result = JSON.parseObject(message);
-            } catch (Exception e) {
-                continue;
-            }
-
+            JSONArray result = JSON.parseArray(message);
             // 获取事件类型 event:"wtv3.videos.insert"
-            String event = (String) result.get("event");
+            String event = (String)((Map)result.get(0)).get("event");
             String[] eventArray = event.split("\\.");
             String index = eventArray[0]; //数据库名
             String tableName = eventArray[1];//表名
             String eventType = eventArray[2];//数据操作类型 insert/update/delete
-            JSONArray valueStr = (JSONArray) result.get("value"); // 获取具体数据
             String esType = tableName.toLowerCase(); // 获取ES的type
-
-            // 转化为对应格式的json字符串
-            JSONObject entity = OrmEntityUtil.ormEntity(tableName,valueStr);
-            //生成index/Delete 对象存入list
-            commonService.ObjectSaveList(index,esType,entity,eventType,list);
+            // todo 数据处理存入es
         }
-        //执行es客户端请求
-        commonService.executeESClientRequest(list);
     }
 }

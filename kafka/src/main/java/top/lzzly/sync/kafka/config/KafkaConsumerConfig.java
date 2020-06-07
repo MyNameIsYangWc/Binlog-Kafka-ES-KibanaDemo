@@ -49,7 +49,7 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 100);//每一批数量
+        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 50);//每一批数量
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, 120000);
         props.put(ConsumerConfig.REQUEST_TIMEOUT_MS_CONFIG, 180000);

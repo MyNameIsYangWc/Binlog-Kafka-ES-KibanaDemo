@@ -28,7 +28,7 @@ public class OrmEntityUtil {
      * @Date : 2020/05/31
      * @Author : 杨文超
      */
-    public static JSONObject ormEntity(String tableName, JSONArray message){
+    public static JSONObject ormEntityList(String tableName, JSONArray message){
 
         if(!tableName.isEmpty() && message !=null && message.size()>0){
             if("User".equalsIgnoreCase(tableName)){//用户表
