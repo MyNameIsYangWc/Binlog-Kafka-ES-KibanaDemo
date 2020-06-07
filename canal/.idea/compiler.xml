@@ -6,21 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="canal" />
-        <module name="binlog" />
         <module name="kafka" />
+        <module name="binlog" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="binlog" target="1.8" />
-      <module name="canal" target="1.8" />
       <module name="kafka" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="binlog" options="-parameters" />
-      <module name="canal" options="-parameters" />
       <module name="kafka" options="-parameters" />
     </option>
   </component>

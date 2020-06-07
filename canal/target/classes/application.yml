@@ -1,0 +1,7 @@
+#kafka配置
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    topic: canal
+    partNum: 3
+    repeatNum: 1
