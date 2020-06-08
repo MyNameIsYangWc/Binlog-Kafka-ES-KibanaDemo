@@ -11,7 +11,7 @@
     <groupId>top.lzzly.sync</groupId>
     <artifactId>canal</artifactId>
     <version>1.0.0</version>
-    <name>BinlogMiddleware</name>
+    <name>Canalware</name>
     <description>Demo project for BinlogMiddleware</description>
 
     <properties>
