@@ -1,4 +1,4 @@
-package top.lzzly.sync.canal;
+package top.lzzly.sync.binlog;
 
 import com.alibaba.fastjson.JSON;
 import com.github.shyiko.mysql.binlog.BinaryLogClient;
